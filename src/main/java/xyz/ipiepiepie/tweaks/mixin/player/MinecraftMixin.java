@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.PlayerLocal;
 import net.minecraft.client.input.InputDevice;
+import net.minecraft.core.InventoryAction;
 import net.minecraft.core.item.ItemFood;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.block.ItemBlock;
@@ -19,6 +20,8 @@ import xyz.ipiepiepie.tweaks.config.BuildingTweaksOptions;
 
 @Mixin(value = Minecraft.class, remap = false)
 public abstract class MinecraftMixin {
+	@Unique
+	private final Minecraft self = (Minecraft) (Object) this;
 
 	@Shadow
 	public PlayerLocal thePlayer;
@@ -105,8 +108,19 @@ public abstract class MinecraftMixin {
 		for (int slot = 0; slot < thePlayer.inventory.mainInventory.length; slot++) {
 			ItemStack another = thePlayer.inventory.mainInventory[slot];
 
+			// refill if we have similar itemstack
 			if (another != null && slot != currentIndex && another.isItemEqual(stack)) {
+				// swap items client-side
 				thePlayer.swapItems(currentIndex, slot);
+
+				// check if playing on server
+				if (self.isMultiplayerWorld()) {
+					// get hotbar slot id if another itemstack is in hotbar
+					if (slot < 9) slot = thePlayer.inventorySlots.getHotbarSlotId(slot + 1);
+					// swap items server-side
+					self.playerController.handleInventoryMouseClick(thePlayer.inventorySlots.containerId, InventoryAction.HOTBAR_ITEM_SWAP, new int[]{slot, currentIndex + 1}, thePlayer);
+				}
+
 				return;
 			}
 		}
