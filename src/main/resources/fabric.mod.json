@@ -1,38 +1,39 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "buildingtweaks",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This mod aims to help new BTA modders.",
+  "name": "Pie's Building Tweaks",
+  "description": "Some useful tweaks for building.",
   "authors": [
-    "Turnip Labs"
+    "ipiepiepie"
   ],
   "contact": {
     "homepage": "",
-    "sources": ""
+    "sources": "",
+		"issues": "https://github.com/ipiepiepie/building-tweaks/issues"
   },
 
 	"icon": "icon.png",
-  "license": "CC0-1.0",
+  "license": "MIT",
 
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
-			"turniplabs.examplemod.ExampleMod"
+      "xyz.ipiepiepie.tweaks.BuildingTweaksMod"
     ],
-		"beforeGameStart": [
-			"turniplabs.examplemod.ExampleMod"
+		"beforeClientStart": [
+          "xyz.ipiepiepie.tweaks.BuildingTweaksMod"
 		],
-		"afterGameStart": [
-			"turniplabs.examplemod.ExampleMod"
+		"afterClientStart": [
+          "xyz.ipiepiepie.tweaks.BuildingTweaksMod"
 		],
-		"recipesReady": [
-			"turniplabs.examplemod.ExampleMod"
+		"modmenu": [
+			"xyz.ipiepiepie.tweaks.config.BuildingTweaksOptions"
 		]
 	},
   "mixins": [
-      "examplemod.mixins.json"
+      "buildingtweaks.mixins.json"
   ],
 
   "depends": {
