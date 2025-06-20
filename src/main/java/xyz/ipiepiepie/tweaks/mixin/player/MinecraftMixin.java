@@ -88,21 +88,21 @@ public abstract class MinecraftMixin {
 	// REFILL //
 
 	@Inject(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/player/inventory/container/ContainerInventory;getCurrentItemIndex()I", shift = At.Shift.BY, by = 3))
-	private void clickRefillMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci, @Local(name = "stack") ItemStack stack) {
+	private void placeRefillMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci, @Local(name = "stack") ItemStack stack) {
+		int currentIndex = thePlayer.inventory.getCurrentItemIndex();
+
 		// can't do anything id current item locked or we don't need any refill
 		if (thePlayer.inventory.currentItemLocked() || stack.stackSize > 0) return;
 
 		// don't refill if it's disabled
 		if (!TweaksManager.getInstance().isRefillEnabled()) {
 			// reset offhand if enabled
-			if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value) {
+			if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value && currentIndex == TweaksManager.getInstance().getOffhandSlot()) {
 				TweaksManager.getInstance().setOffhandSlot(-1);
 			}
 
 			return;
 		}
-
-		int currentIndex = thePlayer.inventory.getCurrentItemIndex();
 
 		// try to refill
 		for (int slot = 0; slot < thePlayer.inventory.mainInventory.length; slot++) {
@@ -126,7 +126,7 @@ public abstract class MinecraftMixin {
 		}
 
 		// reset offhand if enabled
-		if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value) {
+		if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value && currentIndex == TweaksManager.getInstance().getOffhandSlot()) {
 			TweaksManager.getInstance().setOffhandSlot(-1);
 		}
 	}
