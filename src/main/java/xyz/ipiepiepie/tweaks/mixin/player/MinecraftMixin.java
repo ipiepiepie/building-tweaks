@@ -89,46 +89,12 @@ public abstract class MinecraftMixin {
 
 	@Inject(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/player/inventory/container/ContainerInventory;getCurrentItemIndex()I", shift = At.Shift.BY, by = 3))
 	private void placeRefillMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci, @Local(name = "stack") ItemStack stack) {
-		int currentIndex = thePlayer.inventory.getCurrentItemIndex();
+		TweaksManager.getInstance().refill(thePlayer, stack);
+	}
 
-		// can't do anything id current item locked or we don't need any refill
-		if (thePlayer.inventory.currentItemLocked() || stack.stackSize > 0) return;
-
-		// don't refill if it's disabled
-		if (!TweaksManager.getInstance().isRefillEnabled()) {
-			// reset offhand if enabled
-			if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value && currentIndex == TweaksManager.getInstance().getOffhandSlot()) {
-				TweaksManager.getInstance().setOffhandSlot(-1);
-			}
-
-			return;
-		}
-
-		// try to refill
-		for (int slot = 0; slot < thePlayer.inventory.mainInventory.length; slot++) {
-			ItemStack another = thePlayer.inventory.mainInventory[slot];
-
-			// refill if we have similar itemstack
-			if (another != null && slot != currentIndex && another.isItemEqual(stack)) {
-				// swap items client-side
-				thePlayer.swapItems(currentIndex, slot);
-
-				// check if playing on server
-				if (self.isMultiplayerWorld()) {
-					// get hotbar slot id if another itemstack is in hotbar
-					if (slot < 9) slot = thePlayer.inventorySlots.getHotbarSlotId(slot + 1);
-					// swap items server-side
-					self.playerController.handleInventoryMouseClick(thePlayer.inventorySlots.containerId, InventoryAction.HOTBAR_ITEM_SWAP, new int[]{slot, currentIndex + 1}, thePlayer);
-				}
-
-				return;
-			}
-		}
-
-		// reset offhand if enabled
-		if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value && currentIndex == TweaksManager.getInstance().getOffhandSlot()) {
-			TweaksManager.getInstance().setOffhandSlot(-1);
-		}
+	@Inject(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/controller/PlayerController;useItemStackOnNothing(Lnet/minecraft/core/entity/player/Player;Lnet/minecraft/core/world/World;Lnet/minecraft/core/item/ItemStack;)Z", shift = At.Shift.AFTER))
+	private void useRefillMixin(CallbackInfo ci, @Local ItemStack stack) {
+		TweaksManager.getInstance().refill(thePlayer, stack);
 	}
 
 }

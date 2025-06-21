@@ -1,7 +1,5 @@
 package xyz.ipiepiepie.tweaks.mixin.player;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.InventoryAction;
 import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.tool.ItemTool;
@@ -38,25 +36,7 @@ public abstract class PlayerMixin {
 		self.inventory.setItem(currentIndex, null);
 
 		// try to refill
-		for (int slot = 0; slot < self.inventory.mainInventory.length; slot++) {
-			ItemStack another = self.inventory.mainInventory[slot];
-
-			// refill if we have similar itemstack
-			if (another != null && slot != currentIndex && another.itemID == currentItem.itemID) {
-				// swap items client-side
-				self.swapItems(currentIndex, slot);
-
-				// check if playing on server
-				if (Minecraft.getMinecraft().isMultiplayerWorld()) {
-					// get hotbar slot id if another itemstack is in hotbar
-					if (slot < 9) slot = self.inventorySlots.getHotbarSlotId(slot + 1);
-					// swap items server-side
-					Minecraft.getMinecraft().playerController.handleInventoryMouseClick(self.inventorySlots.containerId, InventoryAction.HOTBAR_ITEM_SWAP, new int[]{slot, currentIndex + 1}, self);
-				}
-
-				break;
-			}
-		}
+		TweaksManager.getInstance().refill(self, currentItem);
 
 		ci.cancel();
 	}
