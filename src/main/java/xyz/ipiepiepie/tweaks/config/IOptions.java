@@ -14,4 +14,8 @@ public interface IOptions {
 
 	KeyBinding buildingtweaks$getRefillKey();
 
+	OptionBoolean buildingtweaks$usingDoubleShift();
+
+	KeyBinding buildingtweaks$getShiftLockKey();
+
 }

@@ -13,6 +13,8 @@ public class TweaksManager {
 	private int offhandSlot = -1;
 	// refill //
 	private boolean refillEnabled = false;
+	// shift lock //
+	private boolean shiftLockEnabled = false;
 
 
 	public static TweaksManager getInstance() {
@@ -94,6 +96,16 @@ public class TweaksManager {
 		if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value && currentIndex == TweaksManager.getInstance().getOffhandSlot()) {
 			TweaksManager.getInstance().setOffhandSlot(-1);
 		}
+	}
+
+	// SHIFT LOCK //
+
+	public boolean isShiftLockEnabled() {
+		return shiftLockEnabled;
+	}
+
+	public void setShiftLockEnabled(boolean enabled) {
+		this.shiftLockEnabled = enabled;
 	}
 
 }

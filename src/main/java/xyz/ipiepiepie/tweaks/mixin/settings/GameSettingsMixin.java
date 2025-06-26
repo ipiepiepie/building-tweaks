@@ -30,6 +30,14 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Unique
 	private static final KeyBinding keyRefill = new KeyBinding("options.buildingtweaks.refill.keybind").setDefault(InputDevice.keyboard, Keyboard.KEY_G);
 
+	// SHIFT LOCK KEY //
+
+	@Unique
+	private final OptionBoolean usingDoubleShift = new OptionBoolean(self, "buildingtweaks.shiftlock.usingDoubleShift", true);
+
+	@Unique
+	private static final KeyBinding keyShiftLock = new KeyBinding("options.buildingtweaks.shiftlock.keybind");
+
 	// CUSTOM KEY BINDINGS //
 
 	@Override
@@ -45,6 +53,16 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Override
 	public KeyBinding buildingtweaks$getRefillKey() {
 		return keyRefill;
+	}
+
+	@Override
+	public OptionBoolean buildingtweaks$usingDoubleShift() {
+		return usingDoubleShift;
+	}
+
+	@Override
+	public KeyBinding buildingtweaks$getShiftLockKey() {
+		return keyShiftLock;
 	}
 
 }

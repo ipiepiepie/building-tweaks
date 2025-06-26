@@ -12,6 +12,9 @@
     "hud.HudMixin",
     "hud.ScreenInventoryMixin",
     "player.MinecraftMixin",
+    "player.PlayerControllerMixin",
+    "player.PlayerControllerMPMixin",
+    "player.PlayerInputMixin",
     "settings.GameSettingsMixin"
   ],
   "injectors": {

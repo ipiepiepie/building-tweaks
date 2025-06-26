@@ -32,6 +32,11 @@ public class BuildingTweaksOptions implements ModMenuApi {
 					new OptionsCategory("options.buildingtweaks.refill")
 						.withComponent(new KeyBindingComponent(getRefillKey()))
 				)
+				.withComponent(
+					new OptionsCategory("options.buildingtweaks.shiftlock")
+						.withComponent(new BooleanOptionComponent(usingDoubleShift()))
+						.withComponent(new KeyBindingComponent(getShiftLockKey()))
+				)
 		);
 	}
 
@@ -57,5 +62,13 @@ public class BuildingTweaksOptions implements ModMenuApi {
 
 	public static KeyBinding getRefillKey() {
 		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getRefillKey();
+	}
+
+	public static OptionBoolean usingDoubleShift() {
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$usingDoubleShift();
+	}
+
+	public static KeyBinding getShiftLockKey() {
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getShiftLockKey();
 	}
 }

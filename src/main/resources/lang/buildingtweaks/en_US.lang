@@ -6,3 +6,7 @@ options.buildingtweaks.offhand.resetOnEmpty=Reset Empty Offhand
 
 options.buildingtweaks.refill=Refill
 options.buildingtweaks.refill.keybind=Refill Key
+
+options.buildingtweaks.shiftlock=Shift Lock
+options.buildingtweaks.shiftlock.usingDoubleShift=Enable on Double Shift Click
+options.buildingtweaks.shiftlock.keybind=Shift Lock Key

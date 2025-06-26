@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.PlayerLocal;
 import net.minecraft.client.input.InputDevice;
-import net.minecraft.core.InventoryAction;
 import net.minecraft.core.item.ItemFood;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.block.ItemBlock;
@@ -20,15 +19,13 @@ import xyz.ipiepiepie.tweaks.config.BuildingTweaksOptions;
 
 @Mixin(value = Minecraft.class, remap = false)
 public abstract class MinecraftMixin {
-	@Unique
-	private final Minecraft self = (Minecraft) (Object) this;
-
 	@Shadow
 	public PlayerLocal thePlayer;
 
 	@Unique
 	private int cachedMainSlot = -1;
 
+	// OFFHAND //
 
 	@Inject(method = "clickMouse", at = @At(value = "HEAD"))
 	private void clickHeadMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci) {
@@ -80,6 +77,11 @@ public abstract class MinecraftMixin {
 		} else if (BuildingTweaksOptions.getRefillKey().isPressEvent(currentInputDevice)) {
 			// switch refill
 			TweaksManager.getInstance().setRefillEnabled(!TweaksManager.getInstance().isRefillEnabled());
+
+			cir.setReturnValue(true);
+		} else if (BuildingTweaksOptions.getShiftLockKey().isPressEvent(currentInputDevice)) {
+			// enable shift lock
+			TweaksManager.getInstance().setShiftLockEnabled(!TweaksManager.getInstance().isShiftLockEnabled());
 
 			cir.setReturnValue(true);
 		}
