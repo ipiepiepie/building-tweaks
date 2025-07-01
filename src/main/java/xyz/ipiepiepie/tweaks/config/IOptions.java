@@ -10,6 +10,8 @@ public interface IOptions {
 
 	OptionBoolean buildingtweaks$getResetOffhandOnEmptyBoolean();
 
+	OptionBoolean buildingtweaks$randomizeBlocks();
+
 	KeyBinding buildingtweaks$getOffhandKey();
 
 	KeyBinding buildingtweaks$getRefillKey();

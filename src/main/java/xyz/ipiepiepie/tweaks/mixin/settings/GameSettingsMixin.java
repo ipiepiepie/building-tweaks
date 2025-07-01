@@ -25,6 +25,9 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Unique
 	private final OptionBoolean resetOffhandOnEmptyEnabled = new OptionBoolean(self, "buildingtweaks.offhand.resetOnEmpty", true);
 
+	@Unique
+	private final OptionBoolean randomizeBlocks = new OptionBoolean(self, "buildingtweaks.offhand.randomizeBlocks", true);
+
 	// REFILL //
 
 	@Unique
@@ -43,6 +46,11 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Override
 	public OptionBoolean buildingtweaks$getResetOffhandOnEmptyBoolean() {
 		return resetOffhandOnEmptyEnabled;
+	}
+
+	@Override
+	public OptionBoolean buildingtweaks$randomizeBlocks() {
+		return randomizeBlocks;
 	}
 
 	@Override

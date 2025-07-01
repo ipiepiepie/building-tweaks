@@ -17,13 +17,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.ipiepiepie.tweaks.TweaksManager;
 import xyz.ipiepiepie.tweaks.config.BuildingTweaksOptions;
 
+import java.util.Random;
+
 @Mixin(value = Minecraft.class, remap = false)
 public abstract class MinecraftMixin {
+
 	@Shadow
 	public PlayerLocal thePlayer;
 
 	@Unique
 	private int cachedMainSlot = -1;
+
+	@Unique
+	private Random random = new Random();
 
 	// OFFHAND //
 
@@ -36,10 +42,18 @@ public abstract class MinecraftMixin {
 		if (offhand == null || clickType != 1 || thePlayer.inventory.getCurrentItemIndex() == TweaksManager.getInstance().getOffhandSlot()) return;
 
 		// return if we can place or eat item in main hand
-		if (mainHand != null && (mainHand.getItem() instanceof ItemBlock || mainHand.getItem() instanceof ItemFood)) return;
+		if (mainHand != null && (mainHand.getItem() instanceof ItemFood)) return;
 
 		// don't use offhand when slot is locked
 		if (thePlayer.inventory.currentItemLocked()) return;
+
+		// random block if we have both blocks in off-hand and main hand
+		if (mainHand != null && mainHand.getItem() instanceof ItemBlock) {
+			if (!BuildingTweaksOptions.randomizeBlocks().value) return;
+
+			// randomize block
+			if (!(offhand.getItem() instanceof ItemBlock) || random.nextBoolean()) return;
+		}
 
 		// cache main hand slot index to move cursor back later
 		cachedMainSlot = thePlayer.inventory.getCurrentItemIndex();

@@ -27,6 +27,7 @@ public class BuildingTweaksOptions implements ModMenuApi {
 					new OptionsCategory("options.buildingtweaks.offhand")
 						.withComponent(new KeyBindingComponent(getOffhandKey()))
 						.withComponent(new BooleanOptionComponent(isResetOffhandOnEmpty()))
+						.withComponent(new BooleanOptionComponent(randomizeBlocks()))
 				)
 				.withComponent(
 					new OptionsCategory("options.buildingtweaks.refill")
@@ -66,6 +67,10 @@ public class BuildingTweaksOptions implements ModMenuApi {
 
 	public static OptionBoolean usingDoubleShift() {
 		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$usingDoubleShift();
+	}
+
+	public static OptionBoolean randomizeBlocks() {
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$randomizeBlocks();
 	}
 
 	public static KeyBinding getShiftLockKey() {

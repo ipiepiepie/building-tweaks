@@ -3,6 +3,7 @@ options.buildingtweaks=Building Tweaks
 options.buildingtweaks.offhand=Offhand
 options.buildingtweaks.offhand.keybind=Offhand Key
 options.buildingtweaks.offhand.resetOnEmpty=Reset Empty Offhand
+options.buildingtweaks.offhand.randomizeBlocks=Randomize Blocks
 
 options.buildingtweaks.refill=Refill
 options.buildingtweaks.refill.keybind=Refill Key
