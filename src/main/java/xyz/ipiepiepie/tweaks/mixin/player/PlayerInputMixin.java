@@ -40,15 +40,15 @@ public abstract class PlayerInputMixin {
 		if (!pressed || !BuildingTweaksOptions.usingDoubleShift().value) return;
 
 		// disable shift lock if needed
-		if (TweaksManager.getInstance().isShiftLockEnabled() && !climbing) {
-			TweaksManager.getInstance().setShiftLockEnabled(false);
+		if (TweaksManager.getShiftLock().isEnabled() && !climbing) {
+			TweaksManager.getShiftLock().setEnabled(false);
 			return;
 		}
 
 		// check if first shift click pressed
 		if (sneakTicks > 0) {
 			// enable shift lock
-			TweaksManager.getInstance().setShiftLockEnabled(true);
+			TweaksManager.getShiftLock().setEnabled(true);
 			// reset sneak ticks
 			sneakTicks = 0;
 		} else {
@@ -65,7 +65,7 @@ public abstract class PlayerInputMixin {
 	@Inject(method = "tick", at = @At(value = "TAIL"))
 	private void onTickTail(Player player, CallbackInfo ci) {
 		// affect climbing by shift-lock
-		if (TweaksManager.getInstance().isShiftLockEnabled() && BuildingTweaksOptions.affectsClimbing().value && Minecraft.getMinecraft().thePlayer.canClimb()) {
+		if (TweaksManager.getShiftLock().isEnabled() && BuildingTweaksOptions.affectsClimbing().value && Minecraft.getMinecraft().thePlayer.canClimb()) {
 			// go down if player is sneaking, otherwise stop
 			sneak = !gameSettings.keySneak.isPressed();
 			// set climbing flag

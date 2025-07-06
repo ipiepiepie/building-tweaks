@@ -20,7 +20,7 @@ public class HudComponentShiftLock extends HudComponentMovable {
 
 	@Override
 	public boolean isVisible(Minecraft minecraft) {
-		return TweaksManager.getInstance().isShiftLockEnabled() && minecraft.gameSettings.immersiveMode.drawOverlays();
+		return TweaksManager.getShiftLock().isEnabled() && minecraft.gameSettings.immersiveMode.drawOverlays();
 	}
 
 	@Override

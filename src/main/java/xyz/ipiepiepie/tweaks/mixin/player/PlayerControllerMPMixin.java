@@ -14,7 +14,7 @@ public class PlayerControllerMPMixin {
 
 	@ModifyArg(method = "useOrPlaceItemStackOnTile", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/net/packet/PacketUseOrPlaceItemStack;<init>(IIILnet/minecraft/core/util/helper/Direction;Lnet/minecraft/core/item/ItemStack;DDB)V"), index = 7)
 	private byte redirectShiftLock(byte type) {
-		if (TweaksManager.getInstance().isShiftLockEnabled()) return 2;
+		if (TweaksManager.getShiftLock().isEnabled()) return 2;
 
 		return 0;
 	}

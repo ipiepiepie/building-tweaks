@@ -27,9 +27,9 @@ public abstract class HudMixin {
 	@Inject(method = "renderGameOverlay", at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameSettings;heldItemCountOverlay:Lnet/minecraft/client/option/OptionBoolean;", shift = At.Shift.AFTER))
 	private void addOffhandItemCounter(float partialTicks, boolean flag, int mouseX, int mouseY, CallbackInfo ci, @Local(name = "width") int width, @Local(name = "height") int height, @Local(name = "sp") int sp, @Local Font font) {
 		// skip if offhand is disabled
-		if (!TweaksManager.getInstance().isOffhandEnabled()) return;
+		if (!TweaksManager.getOffhand().isEnabled()) return;
 
-		ItemStack offhandItem = mc.thePlayer.inventory.getItem(TweaksManager.getInstance().getOffhandSlot());
+		ItemStack offhandItem = mc.thePlayer.inventory.getItem(TweaksManager.getOffhand().getSlot());
 		int offhandItemCount = offhandItem != null ? offhandItem.stackSize : 0;
 
 		// skip if we don't have any item in offhand

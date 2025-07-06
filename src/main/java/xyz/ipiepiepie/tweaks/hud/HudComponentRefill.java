@@ -20,7 +20,7 @@ public class HudComponentRefill extends HudComponentMovable {
 
 	@Override
 	public boolean isVisible(Minecraft minecraft) {
-		return TweaksManager.getInstance().isRefillEnabled() && minecraft.gameSettings.immersiveMode.drawOverlays();
+		return TweaksManager.getRefill().isEnabled() && minecraft.gameSettings.immersiveMode.drawOverlays();
 	}
 
 	@Override

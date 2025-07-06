@@ -18,10 +18,10 @@ public abstract class ScreenInventoryMixin {
 	@Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/player/inventory/container/ContainerInventory;getCurrentItemIndex()I", shift = At.Shift.BEFORE))
 	private void renderMixin(Minecraft mc, HudIngame hud, int xSizeScreen, int ySizeScreen, float partialTick, CallbackInfo ci, @Local(name = "x") int x, @Local(name = "y") int y, @Local(name = "inv") ContainerInventory inventory) {
 		// skip if offhand is selected or isn't enabled
-		if (!TweaksManager.getInstance().isOffhandEnabled() || inventory.getCurrentItemIndex() == TweaksManager.getInstance().getOffhandSlot()) return;
+		if (!TweaksManager.getOffhand().isEnabled() || inventory.getCurrentItemIndex() == TweaksManager.getOffhand().getSlot()) return;
 
 		// draw offhand icon
-		hud.drawGuiIcon(x + 4 + TweaksManager.getInstance().getOffhandSlot() % 9 * 20, y - 1, 24, 24, TextureRegistry.getTexture("buildingtweaks:gui/offhand_hotbar_selection"));
+		hud.drawGuiIcon(x + 4 + TweaksManager.getOffhand().getSlot() % 9 * 20, y - 1, 24, 24, TextureRegistry.getTexture("buildingtweaks:gui/offhand_hotbar_selection"));
 	}
 
 

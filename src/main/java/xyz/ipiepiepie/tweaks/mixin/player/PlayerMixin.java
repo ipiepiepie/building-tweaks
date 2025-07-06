@@ -18,7 +18,7 @@ public abstract class PlayerMixin {
 	@Inject(method = "setHotbarOffset", at = @At(value = "HEAD"))
 	private void onHotbarOffset(int offset, CallbackInfo ci) {
 		// reset offhand on changing hotbar
-		TweaksManager.getInstance().setOffhandSlot(-1);
+		TweaksManager.getOffhand().resetSlot();
 	}
 
 	@Inject(method = "destroyCurrentEquippedItem", at = @At(value = "HEAD"), cancellable = true)
@@ -27,7 +27,7 @@ public abstract class PlayerMixin {
 		int currentIndex = self.inventory.getCurrentItemIndex();
 
 		// return if no refill is enabled
-		if (!TweaksManager.getInstance().isRefillEnabled()) return;
+		if (!TweaksManager.getRefill().isEnabled()) return;
 
 		// do nothing if we not dealing with tool
 		if (currentItem == null || !(currentItem.getItem() instanceof ItemTool)) return;
@@ -36,7 +36,7 @@ public abstract class PlayerMixin {
 		self.inventory.setItem(currentIndex, null);
 
 		// try to refill
-		TweaksManager.getInstance().refill(self, currentItem);
+		TweaksManager.getRefill().refill(currentItem);
 
 		ci.cancel();
 	}
