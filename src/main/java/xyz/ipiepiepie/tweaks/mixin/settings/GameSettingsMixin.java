@@ -41,6 +41,9 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Unique
 	private static final KeyBinding keyShiftLock = new KeyBinding("options.buildingtweaks.shiftlock.keybind");
 
+	@Unique
+	private final OptionBoolean affectsClimbing = new OptionBoolean(self, "buildingtweaks.shiftlock.affectsClimbing", true);
+
 	// CUSTOM KEY BINDINGS //
 
 	@Override
@@ -71,6 +74,11 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Override
 	public KeyBinding buildingtweaks$getShiftLockKey() {
 		return keyShiftLock;
+	}
+
+	@Override
+	public OptionBoolean buildingtweaks$affectsClimbing() {
+		return affectsClimbing;
 	}
 
 }

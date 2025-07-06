@@ -20,4 +20,6 @@ public interface IOptions {
 
 	KeyBinding buildingtweaks$getShiftLockKey();
 
+	OptionBoolean buildingtweaks$affectsClimbing();
+
 }

@@ -2,8 +2,11 @@ package xyz.ipiepiepie.tweaks.mixin.player;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.input.PlayerInput;
+import net.minecraft.client.option.GameSettings;
 import net.minecraft.core.entity.player.Player;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,8 +20,16 @@ import xyz.ipiepiepie.tweaks.config.BuildingTweaksOptions;
 @Mixin(value = PlayerInput.class, remap = false)
 public abstract class PlayerInputMixin {
 
+	@Shadow
+	public boolean sneak;
+	@Shadow
+	@Final
+	public GameSettings gameSettings;
+
 	@Unique
 	private int sneakTicks = 0;
+	@Unique
+	private boolean climbing = false;
 
 	/**
 	 * Double shift click handler
@@ -29,7 +40,7 @@ public abstract class PlayerInputMixin {
 		if (!pressed || !BuildingTweaksOptions.usingDoubleShift().value) return;
 
 		// disable shift lock if needed
-		if (TweaksManager.getInstance().isShiftLockEnabled()) {
+		if (TweaksManager.getInstance().isShiftLockEnabled() && !climbing) {
 			TweaksManager.getInstance().setShiftLockEnabled(false);
 			return;
 		}
@@ -49,6 +60,19 @@ public abstract class PlayerInputMixin {
 	private void onTick(Player player, CallbackInfo ci) {
 		// decrease sneak ticks
 		if (sneakTicks > 0) sneakTicks -= 1;
+	}
+
+	@Inject(method = "tick", at = @At(value = "TAIL"))
+	private void onTickTail(Player player, CallbackInfo ci) {
+		// affect climbing by shift-lock
+		if (TweaksManager.getInstance().isShiftLockEnabled() && BuildingTweaksOptions.affectsClimbing().value && Minecraft.getMinecraft().thePlayer.canClimb()) {
+			// go down if player is sneaking, otherwise stop
+			sneak = !gameSettings.keySneak.isPressed();
+			// set climbing flag
+			climbing = true;
+		} else if (climbing) { // reset climbing flag if smth goes wrong
+			climbing = sneak = false;
+		}
 	}
 
 }

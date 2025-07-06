@@ -37,6 +37,7 @@ public class BuildingTweaksOptions implements ModMenuApi {
 					new OptionsCategory("options.buildingtweaks.shiftlock")
 						.withComponent(new BooleanOptionComponent(usingDoubleShift()))
 						.withComponent(new KeyBindingComponent(getShiftLockKey()))
+						.withComponent(new BooleanOptionComponent(affectsClimbing()))
 				)
 		);
 	}
@@ -75,5 +76,9 @@ public class BuildingTweaksOptions implements ModMenuApi {
 
 	public static KeyBinding getShiftLockKey() {
 		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getShiftLockKey();
+	}
+
+	public static OptionBoolean affectsClimbing() {
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$affectsClimbing();
 	}
 }
