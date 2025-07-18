@@ -4,6 +4,7 @@
   "package": "xyz.ipiepiepie.tweaks.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "player.ItemToolAccessor",
     "player.PlayerMixin"
   ],
   "client": [

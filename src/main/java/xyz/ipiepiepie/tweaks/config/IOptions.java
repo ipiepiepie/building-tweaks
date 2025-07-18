@@ -22,4 +22,6 @@ public interface IOptions {
 
 	OptionBoolean buildingtweaks$affectsClimbing();
 
+	KeyBinding buildingtweaks$getAutoToolKey();
+
 }

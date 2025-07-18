@@ -5,6 +5,7 @@ import net.minecraft.core.InventoryAction;
 import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.tool.ItemTool;
+import xyz.ipiepiepie.tweaks.TweaksManager;
 import xyz.ipiepiepie.tweaks.object.Feature;
 
 /**
@@ -32,16 +33,8 @@ public class Refill extends Feature {
 
 			// refill if we have similar itemstack
 			if (another != null && slot != currentIndex && (isTool ? stack.itemID == another.itemID : another.isItemEqual(stack))) {
-				// swap items client-side
-				player.swapItems(currentIndex, slot);
-
-				// check if playing on server
-				if (Minecraft.getMinecraft().isMultiplayerWorld()) {
-					// get hotbar slot id if another itemstack is in hotbar
-					if (slot < 9) slot = player.inventorySlots.getHotbarSlotId(slot + 1);
-					// swap items server-side
-					Minecraft.getMinecraft().playerController.handleInventoryMouseClick(player.inventorySlots.containerId, InventoryAction.HOTBAR_ITEM_SWAP, new int[]{slot, currentIndex + 1}, player);
-				}
+				// swap items in slots
+				TweaksManager.swapSlots(currentIndex, slot);
 
 				return true;
 			}

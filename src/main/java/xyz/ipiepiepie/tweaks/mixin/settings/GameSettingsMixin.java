@@ -33,7 +33,7 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Unique
 	private static final KeyBinding keyRefill = new KeyBinding("options.buildingtweaks.refill.keybind").setDefault(InputDevice.keyboard, Keyboard.KEY_G);
 
-	// SHIFT LOCK KEY //
+	// SHIFT LOCK //
 
 	@Unique
 	private final OptionBoolean usingDoubleShift = new OptionBoolean(self, "buildingtweaks.shiftlock.usingDoubleShift", true);
@@ -43,6 +43,11 @@ public abstract class GameSettingsMixin implements IOptions {
 
 	@Unique
 	private final OptionBoolean affectsClimbing = new OptionBoolean(self, "buildingtweaks.shiftlock.affectsClimbing", true);
+
+	// AUTO TOOL //
+
+	@Unique
+	private static final KeyBinding keyAutoTool = new KeyBinding("options.buildingtweaks.autotool.keybind").setDefault(InputDevice.keyboard, Keyboard.KEY_H);
 
 	// CUSTOM KEY BINDINGS //
 
@@ -79,6 +84,11 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Override
 	public OptionBoolean buildingtweaks$affectsClimbing() {
 		return affectsClimbing;
+	}
+
+	@Override
+	public KeyBinding buildingtweaks$getAutoToolKey() {
+		return keyAutoTool;
 	}
 
 }

@@ -24,10 +24,14 @@ public abstract class MinecraftMixin {
 	@Unique
 	private int cachedMainSlot = -1;
 
+	// TODO change logic
+	@Unique
+	private int cachedSlot = -1;
+
 	// OFFHAND //
 
 	@Inject(method = "clickMouse", at = @At(value = "HEAD"))
-	private void clickHeadMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci) {
+	private void rightClickHeadMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci) {
 		// return if we didn't select offhand
 		if (!TweaksManager.getOffhand().isEnabled() || clickType != 1 || thePlayer.inventory.getCurrentItemIndex() == TweaksManager.getOffhand().getSlot()) return;
 
@@ -44,7 +48,7 @@ public abstract class MinecraftMixin {
 	}
 
 	@Inject(method = "clickMouse", at = @At(value = "TAIL"))
-	private void clickTailMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci) {
+	private void rightClickTailMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci) {
 		// prevent switching main hand and offhand when it wasn't switched
 		if (cachedMainSlot < 0) return;
 
@@ -52,6 +56,40 @@ public abstract class MinecraftMixin {
 		thePlayer.inventory.setCurrentItemIndex(cachedMainSlot, true);
 		// reset cache
 		cachedMainSlot = -1;
+	}
+
+	// AUTO TOOL //
+
+	@Inject(method = "clickMouse", at = @At(value = "HEAD"))
+	private void leftClickHeadMixin(int clickType, boolean attack, boolean repeat, CallbackInfo ci) {
+		// return if we didn't select offhand
+		if (!TweaksManager.getAutoTool().isEnabled() || clickType != 0) return;
+
+		// don't use offhand when slot is locked
+		if (thePlayer.inventory.currentItemLocked()) return;
+
+		int slot = TweaksManager.getAutoTool().tryToUse();
+
+		// skip if we don't have any tool for this block
+		if (slot == -1 || slot == thePlayer.inventory.getCurrentItemIndex()) return;
+
+		// try to reset auto tool
+		resetAutoTool();
+
+		// cache item slot, since we put here our main hand item
+		cachedSlot = slot;
+		// temporally move cursor to offhand
+		TweaksManager.swapSlots(thePlayer.inventory.getCurrentItemIndex(), slot);
+	}
+
+	@Unique
+	private void resetAutoTool() {
+		if (cachedSlot >= 0) {
+			System.out.println("reset");
+			TweaksManager.swapSlots(thePlayer.inventory.getCurrentItemIndex(), cachedSlot);
+			// reset cache
+			cachedSlot = -1;
+		}
 	}
 
 	@Inject(method = "clickMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/player/inventory/container/ContainerInventory;getCurrentItemIndex()I", shift = At.Shift.BY, by = 3))
@@ -90,6 +128,15 @@ public abstract class MinecraftMixin {
 
 	@Inject(method = "checkBoundInputs", at = @At("HEAD"), cancellable = true)
 	private void checkModdedBoundInputs(InputDevice currentInputDevice, CallbackInfoReturnable<Boolean> cir) {
+		// swap auto tool slots back
+		if (Minecraft.getMinecraft().gameSettings.keyAttack.isReleaseEvent(currentInputDevice)) {
+			if (cachedSlot >= 0) {
+				TweaksManager.swapSlots(thePlayer.inventory.getCurrentItemIndex(), cachedSlot);
+				// reset cache
+				cachedSlot = -1;
+			}
+		}
+
 		if (BuildingTweaksOptions.getOffhandKey().isPressEvent(currentInputDevice)) {
 			// reset offhand if its already enabled
 			if (TweaksManager.getOffhand().isEnabled()) {
@@ -112,6 +159,11 @@ public abstract class MinecraftMixin {
 		} else if (BuildingTweaksOptions.getShiftLockKey().isPressEvent(currentInputDevice)) {
 			// enable shift lock
 			TweaksManager.getShiftLock().setEnabled(!TweaksManager.getShiftLock().isEnabled());
+
+			cir.setReturnValue(true);
+		} else if (BuildingTweaksOptions.getAutoToolKey().isPressEvent(currentInputDevice)) {
+			// enable auto tool
+			TweaksManager.getAutoTool().setEnabled(!TweaksManager.getAutoTool().isEnabled());
 
 			cir.setReturnValue(true);
 		}

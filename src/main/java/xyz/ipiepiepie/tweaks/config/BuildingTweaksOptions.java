@@ -39,6 +39,11 @@ public class BuildingTweaksOptions implements ModMenuApi {
 						.withComponent(new KeyBindingComponent(getShiftLockKey()))
 						.withComponent(new BooleanOptionComponent(affectsClimbing()))
 				)
+				.withComponent(
+					new OptionsCategory("options.buildingtweaks.autotool")
+						.withComponent(new KeyBindingComponent(getAutoToolKey()))
+						//.withComponent(new KeyBindingComponent(getSilkAutoToolKey()))
+				)
 		);
 	}
 
@@ -80,5 +85,9 @@ public class BuildingTweaksOptions implements ModMenuApi {
 
 	public static OptionBoolean affectsClimbing() {
 		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$affectsClimbing();
+	}
+
+	public static KeyBinding getAutoToolKey() {
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getAutoToolKey();
 	}
 }
