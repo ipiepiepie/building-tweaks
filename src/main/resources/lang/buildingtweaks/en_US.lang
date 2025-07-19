@@ -15,3 +15,8 @@ options.buildingtweaks.shiftlock.affectsClimbing=Affect Climbing Ropes/Ladders
 
 options.buildingtweaks.autotool=Auto Tool
 options.buildingtweaks.autotool.keybind=Auto Tool Key
+
+options.buildingtweaks.ui=User Interface
+options.buildingtweaks.ui.iconsMode=Icons Display Mode
+options.buildingtweaks.ui.iconsMode.grouped=Grouped List
+options.buildingtweaks.ui.iconsMode.movable=Movable Icons

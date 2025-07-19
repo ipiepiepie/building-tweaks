@@ -8,4 +8,9 @@ import xyz.ipiepiepie.tweaks.object.Feature;
  * @author pie
  */
 public class ShiftLock extends Feature {
+
+	public ShiftLock() {
+		super(new Icon("buildingtweaks:gui/shiftlock_icon", 13, 11));
+	}
+
 }

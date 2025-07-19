@@ -3,12 +3,18 @@ package xyz.ipiepiepie.tweaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.InventoryAction;
 import net.minecraft.core.entity.player.Player;
+import xyz.ipiepiepie.tweaks.object.Feature;
 import xyz.ipiepiepie.tweaks.object.feature.AutoTool;
 import xyz.ipiepiepie.tweaks.object.feature.Offhand;
 import xyz.ipiepiepie.tweaks.object.feature.Refill;
 import xyz.ipiepiepie.tweaks.object.feature.ShiftLock;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class TweaksManager {
+	private static final List<Feature> enabledFeatures = new ArrayList<>();
 	// offhand //
 	private static final Offhand offhand = new Offhand();
 	// refill //
@@ -43,6 +49,10 @@ public class TweaksManager {
 	}
 
 	// UTIL //
+
+	public static List<Feature> getFeatures() {
+		return Arrays.asList(autoTool, refill, shiftLock, offhand);
+	}
 
 	public static void swapSlots(int first, int second) {
 		Player player = Minecraft.getMinecraft().thePlayer;

@@ -3,12 +3,14 @@ package xyz.ipiepiepie.tweaks.mixin.settings;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.input.InputDevice;
-import net.minecraft.client.option.GameSettings;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.option.OptionBoolean;
+import net.minecraft.client.option.*;
+import net.minecraft.core.lang.I18n;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import xyz.ipiepiepie.tweaks.config.IOptions;
 
 @Environment(EnvType.CLIENT)
@@ -48,6 +50,27 @@ public abstract class GameSettingsMixin implements IOptions {
 
 	@Unique
 	private static final KeyBinding keyAutoTool = new KeyBinding("options.buildingtweaks.autotool.keybind").setDefault(InputDevice.keyboard, Keyboard.KEY_H);
+
+	// UI //
+
+	@Unique
+	private final OptionRange featureIconsMode = new OptionRange(self, "buildingtweaks.ui.iconsMode", 0, 0, 1);
+
+	@Inject(method = "getDisplayString", at = @At("HEAD"), cancellable = true)
+	private void customDisplayString(Option<?> option, CallbackInfoReturnable<String> cir) {
+		if (option == featureIconsMode) {
+			int value = (int) option.value;
+			if (value == 0) {
+				cir.setReturnValue(I18n.getInstance().translateKey("options.buildingtweaks.ui.iconsMode.grouped"));
+				return;
+			}
+			if (value == 1) {
+				cir.setReturnValue(I18n.getInstance().translateKey("options.buildingtweaks.ui.iconsMode.movable"));
+				return;
+			}
+			cir.setReturnValue(value + "%");
+		}
+	}
 
 	// CUSTOM KEY BINDINGS //
 
@@ -89,6 +112,11 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Override
 	public KeyBinding buildingtweaks$getAutoToolKey() {
 		return keyAutoTool;
+	}
+
+	@Override
+	public OptionRange buildingtweaks$featureIconsMode() {
+		return featureIconsMode;
 	}
 
 }

@@ -15,6 +15,10 @@ import xyz.ipiepiepie.tweaks.object.Feature;
  */
 public class AutoTool extends Feature {
 
+	public AutoTool() {
+		super(new Icon("buildingtweaks:gui/autotool_icon", 17, 11));
+	}
+
 	/**
 	 * Check if we should use auto-tool.
 	 *

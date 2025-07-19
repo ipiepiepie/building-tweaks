@@ -9,8 +9,9 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import xyz.ipiepiepie.tweaks.hud.HudComponentRefill;
-import xyz.ipiepiepie.tweaks.hud.HudComponentShiftLock;
+import xyz.ipiepiepie.tweaks.TweaksManager;
+import xyz.ipiepiepie.tweaks.hud.HudComponentFeature;
+import xyz.ipiepiepie.tweaks.hud.HudComponentFeatures;
 
 import static net.minecraft.client.gui.hud.component.HudComponents.register;
 
@@ -21,10 +22,16 @@ public abstract class HudComponentsMixin {
 	public static HudComponent HOTBAR;
 
 	@Unique
-	private static final HudComponent REFILL = register(new HudComponentRefill("refill", new LayoutSnap(HOTBAR, ComponentAnchor.TOP_CENTER, ComponentAnchor.BOTTOM_CENTER)));
+	private static final HudComponent REFILL = register(new HudComponentFeature("refill", TweaksManager.getRefill(), new LayoutSnap(HOTBAR, ComponentAnchor.TOP_CENTER, ComponentAnchor.BOTTOM_CENTER)));
 
 	@Unique
-	private static final HudComponent SHIFT_LOCK = register(new HudComponentShiftLock("shiftlock", new LayoutAbsolute(1.0F, 1.0F, ComponentAnchor.BOTTOM_RIGHT)));
+	private static final HudComponent AUTO_TOOL = register(new HudComponentFeature("autotool", TweaksManager.getAutoTool(), new LayoutAbsolute(1.0F, 1.0F,ComponentAnchor.BOTTOM_RIGHT)));
+
+	@Unique
+	private static final HudComponent SHIFT_LOCK = register(new HudComponentFeature("shiftlock", TweaksManager.getShiftLock(), new LayoutSnap(AUTO_TOOL, ComponentAnchor.TOP_CENTER, ComponentAnchor.BOTTOM_CENTER)));
+
+	@Unique
+	private static final HudComponent FEATURES = register(new HudComponentFeatures("features", new LayoutAbsolute(1.0F, 1.0F, ComponentAnchor.BOTTOM_RIGHT)));
 
 
 

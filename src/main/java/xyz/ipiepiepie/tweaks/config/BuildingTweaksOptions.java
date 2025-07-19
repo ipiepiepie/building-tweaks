@@ -4,13 +4,12 @@ import io.github.prospector.modmenu.api.ModMenuApi;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.gui.options.ScreenOptions;
-import net.minecraft.client.gui.options.components.BooleanOptionComponent;
-import net.minecraft.client.gui.options.components.KeyBindingComponent;
-import net.minecraft.client.gui.options.components.OptionsCategory;
+import net.minecraft.client.gui.options.components.*;
 import net.minecraft.client.gui.options.data.OptionsPage;
 import net.minecraft.client.gui.options.data.OptionsPages;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.option.OptionBoolean;
+import net.minecraft.client.option.OptionRange;
 import net.minecraft.core.block.Blocks;
 import net.minecraft.core.item.ItemStack;
 import xyz.ipiepiepie.tweaks.BuildingTweaksMod;
@@ -43,6 +42,11 @@ public class BuildingTweaksOptions implements ModMenuApi {
 					new OptionsCategory("options.buildingtweaks.autotool")
 						.withComponent(new KeyBindingComponent(getAutoToolKey()))
 						//.withComponent(new KeyBindingComponent(getSilkAutoToolKey()))
+				)
+				.withComponent(
+					new OptionsCategory("options.buildingtweaks.ui")
+						.withComponent(new ToggleableOptionComponent<>(groupFeatureIcons()))
+					//.withComponent(new KeyBindingComponent(getSilkAutoToolKey()))
 				)
 		);
 	}
@@ -90,4 +94,9 @@ public class BuildingTweaksOptions implements ModMenuApi {
 	public static KeyBinding getAutoToolKey() {
 		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getAutoToolKey();
 	}
+
+	public static OptionRange groupFeatureIcons() {
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$featureIconsMode();
+	}
+
 }

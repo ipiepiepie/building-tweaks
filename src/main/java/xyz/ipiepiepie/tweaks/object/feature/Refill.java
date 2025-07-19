@@ -15,6 +15,10 @@ import xyz.ipiepiepie.tweaks.object.Feature;
  */
 public class Refill extends Feature {
 
+	public Refill() {
+		super(new Icon("buildingtweaks:gui/refill_icon", 13, 11));
+	}
+
 	/**
 	 * Refill {@link ItemStack}.
 	 * @param stack stack to refill

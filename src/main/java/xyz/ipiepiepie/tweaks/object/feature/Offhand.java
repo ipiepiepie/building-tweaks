@@ -28,6 +28,10 @@ public class Offhand extends Feature {
 	private final Random random = new Random();
 	private int slot = -1;
 
+	public Offhand() {
+		super(null);
+	}
+
 	/**
 	 * Check if we should use offhand.
 	 *

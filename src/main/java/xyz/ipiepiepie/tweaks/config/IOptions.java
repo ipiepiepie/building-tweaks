@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.option.OptionBoolean;
+import net.minecraft.client.option.OptionRange;
 
 @Environment(EnvType.CLIENT)
 public interface IOptions {
@@ -23,5 +24,7 @@ public interface IOptions {
 	OptionBoolean buildingtweaks$affectsClimbing();
 
 	KeyBinding buildingtweaks$getAutoToolKey();
+
+	OptionRange buildingtweaks$featureIconsMode();
 
 }
