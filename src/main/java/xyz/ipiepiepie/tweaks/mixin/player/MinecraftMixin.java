@@ -161,6 +161,11 @@ public abstract class MinecraftMixin {
 			TweaksManager.getRefill().setEnabled(!TweaksManager.getRefill().isEnabled());
 
 			cir.setReturnValue(true);
+		} else if (BuildingTweaksOptions.getRandomizeKey().isPressEvent(currentInputDevice)) {
+			// enable randomize
+			TweaksManager.getRandomize().setEnabled(!TweaksManager.getRandomize().isEnabled());
+
+			cir.setReturnValue(true);
 		} else if (BuildingTweaksOptions.getShiftLockKey().isPressEvent(currentInputDevice)) {
 			// enable shift lock
 			TweaksManager.getShiftLock().setEnabled(!TweaksManager.getShiftLock().isEnabled());

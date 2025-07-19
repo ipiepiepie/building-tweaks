@@ -28,7 +28,10 @@ public abstract class HudComponentsMixin {
 	private static final HudComponent AUTO_TOOL = register(new HudComponentFeature("autotool", TweaksManager.getAutoTool(), new LayoutAbsolute(1.0F, 1.0F,ComponentAnchor.BOTTOM_RIGHT)));
 
 	@Unique
-	private static final HudComponent SHIFT_LOCK = register(new HudComponentFeature("shiftlock", TweaksManager.getShiftLock(), new LayoutSnap(AUTO_TOOL, ComponentAnchor.TOP_CENTER, ComponentAnchor.BOTTOM_CENTER)));
+	private static final HudComponent RANDOMIZE = register(new HudComponentFeature("randomize", TweaksManager.getRandomize(), new LayoutSnap(AUTO_TOOL, ComponentAnchor.TOP_CENTER, ComponentAnchor.BOTTOM_CENTER)));
+
+	@Unique
+	private static final HudComponent SHIFT_LOCK = register(new HudComponentFeature("shiftlock", TweaksManager.getShiftLock(), new LayoutSnap(RANDOMIZE, ComponentAnchor.TOP_CENTER, ComponentAnchor.BOTTOM_CENTER)));
 
 	@Unique
 	private static final HudComponent FEATURES = register(new HudComponentFeatures("features", new LayoutAbsolute(1.0F, 1.0F, ComponentAnchor.BOTTOM_RIGHT)));

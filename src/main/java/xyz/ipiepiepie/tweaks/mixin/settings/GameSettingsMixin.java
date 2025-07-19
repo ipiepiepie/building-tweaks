@@ -27,8 +27,12 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Unique
 	private final OptionBoolean resetOffhandOnEmptyEnabled = new OptionBoolean(self, "buildingtweaks.offhand.resetOnEmpty", true);
 
+
+
+	// RANDOMIZE //
+
 	@Unique
-	private final OptionBoolean randomizeBlocks = new OptionBoolean(self, "buildingtweaks.offhand.randomizeBlocks", true);
+	private final KeyBinding keyRandomize = new KeyBinding("options.buildingtweaks.randomize.keybind").setDefault(InputDevice.keyboard, Keyboard.KEY_J);
 
 	// REFILL //
 
@@ -80,11 +84,6 @@ public abstract class GameSettingsMixin implements IOptions {
 	}
 
 	@Override
-	public OptionBoolean buildingtweaks$randomizeBlocks() {
-		return randomizeBlocks;
-	}
-
-	@Override
 	public KeyBinding buildingtweaks$getOffhandKey() {
 		return keyOffhand;
 	}
@@ -117,6 +116,11 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Override
 	public OptionRange buildingtweaks$featureIconsMode() {
 		return featureIconsMode;
+	}
+
+	@Override
+	public KeyBinding buildingtweaks$getRandomizeKey() {
+		return keyRandomize;
 	}
 
 }

@@ -4,21 +4,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.InventoryAction;
 import net.minecraft.core.entity.player.Player;
 import xyz.ipiepiepie.tweaks.object.Feature;
-import xyz.ipiepiepie.tweaks.object.feature.AutoTool;
-import xyz.ipiepiepie.tweaks.object.feature.Offhand;
-import xyz.ipiepiepie.tweaks.object.feature.Refill;
-import xyz.ipiepiepie.tweaks.object.feature.ShiftLock;
+import xyz.ipiepiepie.tweaks.object.feature.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TweaksManager {
-	private static final List<Feature> enabledFeatures = new ArrayList<>();
 	// offhand //
 	private static final Offhand offhand = new Offhand();
 	// refill //
 	private static final Refill refill = new Refill();
+	// randomize //
+	private static final Randomize randomize = new Randomize();
 	// shift lock //
 	private static final ShiftLock shiftLock = new ShiftLock();
 	// auto-tool //
@@ -36,6 +33,12 @@ public class TweaksManager {
 		return refill;
 	}
 
+	// RANDOMIZE //
+
+	public static Randomize getRandomize() {
+		return randomize;
+	}
+
 	// SHIFT LOCK //
 
 	public static ShiftLock getShiftLock() {
@@ -51,7 +54,7 @@ public class TweaksManager {
 	// UTIL //
 
 	public static List<Feature> getFeatures() {
-		return Arrays.asList(autoTool, refill, shiftLock, offhand);
+		return Arrays.asList(autoTool, randomize, refill, shiftLock, offhand);
 	}
 
 	public static void swapSlots(int first, int second) {

@@ -14,6 +14,7 @@ import net.minecraft.core.item.block.ItemBlock;
 import net.minecraft.core.item.tool.ItemToolHoe;
 import net.minecraft.core.util.phys.HitResult;
 import net.minecraft.core.world.World;
+import xyz.ipiepiepie.tweaks.TweaksManager;
 import xyz.ipiepiepie.tweaks.config.BuildingTweaksOptions;
 import xyz.ipiepiepie.tweaks.object.Feature;
 
@@ -88,7 +89,7 @@ public class Offhand extends Feature {
 
 		// random block if we have both blocks in off-hand and main hand
 		if (mainHand.getItem() instanceof ItemBlock) {
-			if (!BuildingTweaksOptions.randomizeBlocks().value) return false;
+			if (!TweaksManager.getRandomize().isEnabled()) return false;
 
 			// randomize block
 			return offhand.getItem() instanceof ItemBlock && random.nextBoolean();

@@ -11,7 +11,7 @@ public interface IOptions {
 
 	OptionBoolean buildingtweaks$getResetOffhandOnEmptyBoolean();
 
-	OptionBoolean buildingtweaks$randomizeBlocks();
+	KeyBinding buildingtweaks$getRandomizeKey();
 
 	KeyBinding buildingtweaks$getOffhandKey();
 
