@@ -49,7 +49,6 @@ public class BuildingTweaksOptions implements ModMenuApi {
 				.withComponent(
 					new OptionsCategory("options.buildingtweaks.ui")
 						.withComponent(new ToggleableOptionComponent<>(groupFeatureIcons()))
-					//.withComponent(new KeyBindingComponent(getSilkAutoToolKey()))
 				)
 		);
 	}

@@ -42,7 +42,7 @@ public class AutoTool extends Feature {
 	}
 
 	private int getSuitableTool(Player player, Block<?> block) {
-		boolean useSilk = block.getLogic() instanceof BlockLogicStone || block.getLogic() instanceof BlockLogicGlowStone || block.getLogic() instanceof BlockLogicGlass || block.getLogic() instanceof BlockLogicGrass;
+		boolean useSilk = block.getLogic() instanceof BlockLogicStone || block.getLogic() instanceof BlockLogicGlowStone || block.getLogic() instanceof BlockLogicGlass || block.getLogic() instanceof BlockLogicGrass || block.getLogic() instanceof BlockLogicMobSpawner;
 
 		int bestSlot = -1;
 		float bestEffectiveness = 1;
