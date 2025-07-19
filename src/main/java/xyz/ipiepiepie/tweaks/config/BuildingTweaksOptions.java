@@ -34,6 +34,7 @@ public class BuildingTweaksOptions implements ModMenuApi {
 				.withComponent(
 					new OptionsCategory("options.buildingtweaks.refill")
 						.withComponent(new KeyBindingComponent(getRefillKey()))
+						.withComponent(new BooleanOptionComponent(refillDrops()))
 				)
 				.withComponent(
 					new OptionsCategory("options.buildingtweaks.shiftlock")
@@ -70,11 +71,15 @@ public class BuildingTweaksOptions implements ModMenuApi {
 	}
 
 	public static OptionBoolean isResetOffhandOnEmpty() {
-		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getResetOffhandOnEmptyBoolean();
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getResetOffhandOnEmpty();
 	}
 
 	public static KeyBinding getRefillKey() {
 		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$getRefillKey();
+	}
+
+	public static OptionBoolean refillDrops() {
+		return ((IOptions) Minecraft.getMinecraft().gameSettings).buildingtweaks$refillDrops();
 	}
 
 	public static OptionBoolean usingDoubleShift() {

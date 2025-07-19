@@ -39,6 +39,9 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Unique
 	private static final KeyBinding keyRefill = new KeyBinding("options.buildingtweaks.refill.keybind").setDefault(InputDevice.keyboard, Keyboard.KEY_G);
 
+	@Unique
+	private final OptionBoolean refillDrops = new OptionBoolean(self, "buildingtweaks.refill.refillDrops", true);
+
 	// SHIFT LOCK //
 
 	@Unique
@@ -79,7 +82,7 @@ public abstract class GameSettingsMixin implements IOptions {
 	// CUSTOM KEY BINDINGS //
 
 	@Override
-	public OptionBoolean buildingtweaks$getResetOffhandOnEmptyBoolean() {
+	public OptionBoolean buildingtweaks$getResetOffhandOnEmpty() {
 		return resetOffhandOnEmptyEnabled;
 	}
 
@@ -91,6 +94,11 @@ public abstract class GameSettingsMixin implements IOptions {
 	@Override
 	public KeyBinding buildingtweaks$getRefillKey() {
 		return keyRefill;
+	}
+
+	@Override
+	public OptionBoolean buildingtweaks$refillDrops() {
+		return refillDrops;
 	}
 
 	@Override

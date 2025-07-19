@@ -1,7 +1,5 @@
 package xyz.ipiepiepie.tweaks.object;
 
-import xyz.ipiepiepie.tweaks.TweaksManager;
-
 /**
  * Represents some toggleable feature.
  */

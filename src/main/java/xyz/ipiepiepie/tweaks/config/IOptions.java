@@ -9,13 +9,15 @@ import net.minecraft.client.option.OptionRange;
 @Environment(EnvType.CLIENT)
 public interface IOptions {
 
-	OptionBoolean buildingtweaks$getResetOffhandOnEmptyBoolean();
+	OptionBoolean buildingtweaks$getResetOffhandOnEmpty();
 
 	KeyBinding buildingtweaks$getRandomizeKey();
 
 	KeyBinding buildingtweaks$getOffhandKey();
 
 	KeyBinding buildingtweaks$getRefillKey();
+
+	OptionBoolean buildingtweaks$refillDrops();
 
 	OptionBoolean buildingtweaks$usingDoubleShift();
 

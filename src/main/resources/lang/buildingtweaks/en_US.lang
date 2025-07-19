@@ -6,6 +6,7 @@ options.buildingtweaks.offhand.resetOnEmpty=Reset Empty Offhand
 
 options.buildingtweaks.refill=Refill
 options.buildingtweaks.refill.keybind=Refill Key
+options.buildingtweaks.refill.refillDrops=Refill Item Drops
 
 options.buildingtweaks.randomize=Randomize
 options.buildingtweaks.randomize.keybind=Randomize Key
