@@ -73,19 +73,24 @@ public abstract class MinecraftMixin {
 		// skip if we don't have any tool for this block
 		if (slot == -1 || slot == thePlayer.inventory.getCurrentItemIndex()) return;
 
+		int cache = cachedSlot;
+
 		// try to reset auto tool
 		resetAutoTool();
 
+		// return if needed tool lays in swapped slot
+		if (cache == slot) return;
+
 		// cache item slot, since we put here our main hand item
 		cachedSlot = slot;
-		// temporally move cursor to offhand
+
+		// swap items
 		TweaksManager.swapSlots(thePlayer.inventory.getCurrentItemIndex(), slot);
 	}
 
 	@Unique
 	private void resetAutoTool() {
 		if (cachedSlot >= 0) {
-			System.out.println("reset");
 			TweaksManager.swapSlots(thePlayer.inventory.getCurrentItemIndex(), cachedSlot);
 			// reset cache
 			cachedSlot = -1;
