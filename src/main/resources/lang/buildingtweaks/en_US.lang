@@ -6,7 +6,20 @@ options.buildingtweaks.offhand.resetOnEmpty=Reset Empty Offhand
 
 options.buildingtweaks.refill=Refill
 options.buildingtweaks.refill.keybind=Refill Key
+options.buildingtweaks.refill.refillDrops=Refill Item Drops
+
+options.buildingtweaks.randomize=Randomize
+options.buildingtweaks.randomize.keybind=Randomize Key
 
 options.buildingtweaks.shiftlock=Shift Lock
 options.buildingtweaks.shiftlock.usingDoubleShift=Enable on Double Shift Click
 options.buildingtweaks.shiftlock.keybind=Shift Lock Key
+options.buildingtweaks.shiftlock.affectsClimbing=Affect Climbing Ropes/Ladders
+
+options.buildingtweaks.autotool=Auto Tool
+options.buildingtweaks.autotool.keybind=Auto Tool Key
+
+options.buildingtweaks.ui=User Interface
+options.buildingtweaks.ui.iconsMode=Icons Display Mode
+options.buildingtweaks.ui.iconsMode.grouped=Grouped List
+options.buildingtweaks.ui.iconsMode.movable=Movable Icons

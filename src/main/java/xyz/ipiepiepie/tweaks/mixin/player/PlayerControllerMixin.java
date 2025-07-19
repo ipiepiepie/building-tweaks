@@ -15,7 +15,7 @@ public abstract class PlayerControllerMixin {
 
 	@Redirect(method = "useOrPlaceItemStackOnTile", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/entity/player/Player;isSneaking()Z"))
 	private boolean redirectShiftLock(Player player) {
-		if (TweaksManager.getInstance().isShiftLockEnabled()) return true;
+		if (TweaksManager.getShiftLock().isEnabled()) return true;
 
 		return player.isSneaking();
 	}

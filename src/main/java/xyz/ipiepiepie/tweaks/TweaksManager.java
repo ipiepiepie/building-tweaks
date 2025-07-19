@@ -3,109 +3,72 @@ package xyz.ipiepiepie.tweaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.InventoryAction;
 import net.minecraft.core.entity.player.Player;
-import net.minecraft.core.item.ItemStack;
-import net.minecraft.core.item.tool.ItemTool;
-import xyz.ipiepiepie.tweaks.config.BuildingTweaksOptions;
+import xyz.ipiepiepie.tweaks.object.Feature;
+import xyz.ipiepiepie.tweaks.object.feature.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TweaksManager {
-	private static TweaksManager manager;
 	// offhand //
-	private int offhandSlot = -1;
+	private static final Offhand offhand = new Offhand();
 	// refill //
-	private boolean refillEnabled = false;
+	private static final Refill refill = new Refill();
+	// randomize //
+	private static final Randomize randomize = new Randomize();
 	// shift lock //
-	private boolean shiftLockEnabled = false;
-
-
-	public static TweaksManager getInstance() {
-		if (manager == null) manager = new TweaksManager();
-
-		return manager;
-	}
+	private static final ShiftLock shiftLock = new ShiftLock();
+	// auto-tool //
+	private static final AutoTool autoTool = new AutoTool();
 
 	// OFFHAND //
 
-	public boolean isOffhandEnabled() {
-		return offhandSlot >= 0;
-	}
-
-	public int getOffhandSlot() {
-		return offhandSlot;
-	}
-
-	public void setOffhandSlot(int slot) {
-		this.offhandSlot = slot;
+	public static Offhand getOffhand() {
+		return offhand;
 	}
 
 	// REFILL //
 
-	public boolean isRefillEnabled() {
-		return refillEnabled;
+	public static Refill getRefill() {
+		return refill;
 	}
 
-	public void setRefillEnabled(boolean enabled) {
-		this.refillEnabled = enabled;
-	}
+	// RANDOMIZE //
 
-	/**
-	 * Refill current player's itemstack
-	 * @param player player
-	 * @param stack stack to refill
-	 */
-	public void refill(Player player, ItemStack stack) {
-		int currentIndex = player.inventory.getCurrentItemIndex();
-
-		// can't do anything id current item locked or we don't need any refill
-		if (player.inventory.currentItemLocked() || stack == null || stack.stackSize > 0) return;
-
-		// don't refill if it's disabled
-		if (!TweaksManager.getInstance().isRefillEnabled()) {
-			// reset offhand if enabled
-			if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value && currentIndex == TweaksManager.getInstance().getOffhandSlot()) {
-				TweaksManager.getInstance().setOffhandSlot(-1);
-			}
-
-			return;
-		}
-
-		// check if we are dealing with tool
-		boolean isTool = stack.getItem() instanceof ItemTool;
-
-		// try to refill
-		for (int slot = 0; slot < player.inventory.mainInventory.length; slot++) {
-			ItemStack another = player.inventory.mainInventory[slot];
-
-			// refill if we have similar itemstack
-			if (another != null && slot != currentIndex && (isTool ? stack.itemID == another.itemID : another.isItemEqual(stack))) {
-				// swap items client-side
-				player.swapItems(currentIndex, slot);
-
-				// check if playing on server
-				if (Minecraft.getMinecraft().isMultiplayerWorld()) {
-					// get hotbar slot id if another itemstack is in hotbar
-					if (slot < 9) slot = player.inventorySlots.getHotbarSlotId(slot + 1);
-					// swap items server-side
-					Minecraft.getMinecraft().playerController.handleInventoryMouseClick(player.inventorySlots.containerId, InventoryAction.HOTBAR_ITEM_SWAP, new int[]{slot, currentIndex + 1}, player);
-				}
-
-				return;
-			}
-		}
-
-		// reset offhand if enabled
-		if (TweaksManager.getInstance().isOffhandEnabled() && BuildingTweaksOptions.isResetOffhandOnEmpty().value && currentIndex == TweaksManager.getInstance().getOffhandSlot()) {
-			TweaksManager.getInstance().setOffhandSlot(-1);
-		}
+	public static Randomize getRandomize() {
+		return randomize;
 	}
 
 	// SHIFT LOCK //
 
-	public boolean isShiftLockEnabled() {
-		return shiftLockEnabled;
+	public static ShiftLock getShiftLock() {
+		return shiftLock;
 	}
 
-	public void setShiftLockEnabled(boolean enabled) {
-		this.shiftLockEnabled = enabled;
+	// AUTO-TOOL //
+
+	public static AutoTool getAutoTool() {
+		return autoTool;
+	}
+
+	// UTIL //
+
+	public static List<Feature> getFeatures() {
+		return Arrays.asList(autoTool, randomize, refill, shiftLock, offhand);
+	}
+
+	public static void swapSlots(int first, int second) {
+		Player player = Minecraft.getMinecraft().thePlayer;
+		// swap items client-side
+		player.swapItems(first, second);
+
+		// check if playing on server
+		if (Minecraft.getMinecraft().isMultiplayerWorld()) {
+			// get hotbar slot id if another itemstack is in hotbar
+			if (second < 9) second = player.inventorySlots.getHotbarSlotId(second + 1);
+			// swap items server-side
+			Minecraft.getMinecraft().playerController.handleInventoryMouseClick(player.inventorySlots.containerId, InventoryAction.HOTBAR_ITEM_SWAP, new int[]{second, first + 1}, player);
+		}
 	}
 
 }
